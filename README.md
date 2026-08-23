@@ -17,8 +17,9 @@ bun run dev
 
 | Piece | Status |
 |---|---|
-| `src/` — Bun server (SPA + `/api/*`) | live |
-| `.github/workflows/ci.yml` | lint + typecheck + test only — session 3 rewires it to call `paved-road/service.yml@v1` for the full gate set |
+| `src/server.ts` (API routes) | live, tested (`src/server.test.ts` covers `/api/hello`, `/api/healthz`) |
+| `src/app.tsx` (React SPA) | live, **not** exercised by any test — `bun run typecheck` is the only signal on it right now. Add a render test before treating "tests green" as covering the SPA half. |
+| `.github/workflows/ci.yml` | lint + typecheck + test only — session 3 rewires it to call `paved-road`'s reusable `plan.yml`/`deploy.yml`/`agents.yml` for the full gate set (see `paved-road/bootstrap/README.md` for why it's three files, not one `service.yml`) |
 | `infra/dev/`, `infra/prod/` | empty — session 2 |
 | `infracost-usage.yml` | placeholder — session 3 |
 | `.claude/skills/{ship,watch}` | placeholder — session 4 |
