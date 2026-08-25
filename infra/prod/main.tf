@@ -21,6 +21,11 @@ terraform {
 
 provider "aws" {
   region = "us-east-1"
+
+  # See infra/dev/main.tf's provider block for why — CI's credential-less
+  # tofu-validate job needs to run offline; real deploys are unaffected.
+  skip_credentials_validation = true
+  skip_requesting_account_id  = true
 }
 
 variable "image_uri" {
@@ -29,7 +34,7 @@ variable "image_uri" {
 }
 
 module "service" {
-  source    = "../../../paved-road/modules/service"
+  source    = "git::https://github.com/hops-poc/paved-road.git//modules/service?ref=ab59f1e066e6fb7d6b0f47502fb1c3bbb2e67566"
   env       = "prod"
   image_uri = var.image_uri
 }

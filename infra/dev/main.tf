@@ -1,9 +1,8 @@
 # dev stack — thin caller of paved-road's service module. State lives at
 # dev/terraform.tfstate in the shared bucket (bootstrap/).
 #
-# Module source is a local relative path for session-2 manual apply; session 3's
-# deploy.yml swaps it for a pinned git ref
-# (git::https://github.com/hops-poc/paved-road.git//modules/service?ref=<sha>).
+# Module source is pinned to the commit deploy.yml itself runs from — bump
+# this alongside ci.yml's workflow-call SHA, not independently.
 
 terraform {
   required_version = ">= 1.8.0"
@@ -24,6 +23,18 @@ terraform {
 
 provider "aws" {
   region = "us-east-1"
+
+  # `tofu validate` calls the provider's Configure(), which pings STS even
+  # for validate (no plan/apply happens) — confirmed empirically: with zero
+  # AWS credentials it errors on IMDS, and with dummy credentials it still
+  # calls GetCallerIdentity and gets a real 403. CI's credential-less
+  # tofu-validate job (paved-road plan.yml) needs both of these to run
+  # offline; real deploys still authenticate normally via OIDC-assumed
+  # role credentials for every actual resource call, this only skips one
+  # eager sanity ping. Module doesn't read the account ID anywhere, so
+  # skip_requesting_account_id is free.
+  skip_credentials_validation = true
+  skip_requesting_account_id  = true
 }
 
 variable "image_uri" {
@@ -32,7 +43,7 @@ variable "image_uri" {
 }
 
 module "service" {
-  source    = "../../../paved-road/modules/service"
+  source    = "git::https://github.com/hops-poc/paved-road.git//modules/service?ref=ab59f1e066e6fb7d6b0f47502fb1c3bbb2e67566"
   env       = "dev"
   image_uri = var.image_uri
 }
