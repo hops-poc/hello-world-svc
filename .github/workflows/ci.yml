@@ -17,15 +17,15 @@ permissions:
 
 jobs:
   gates:
-    uses: hops-poc/paved-road/.github/workflows/plan.yml@7a7888600c7763a0aa606c0f0f57164b615a6ad8
+    uses: hops-poc/paved-road/.github/workflows/plan.yml@25fca9e38ce3f7411ed0e1ff8f67958ec6c96944
     secrets: inherit
 
   agents-narrate:
     needs: gates
     if: always()
-    uses: hops-poc/paved-road/.github/workflows/agents.yml@7a7888600c7763a0aa606c0f0f57164b615a6ad8
+    uses: hops-poc/paved-road/.github/workflows/agents.yml@25fca9e38ce3f7411ed0e1ff8f67958ec6c96944
 
   deploy:
     needs: gates
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    uses: hops-poc/paved-road/.github/workflows/deploy.yml@7a7888600c7763a0aa606c0f0f57164b615a6ad8
+    uses: hops-poc/paved-road/.github/workflows/deploy.yml@25fca9e38ce3f7411ed0e1ff8f67958ec6c96944
