@@ -34,7 +34,7 @@ variable "image_uri" {
 }
 
 module "service" {
-  source    = "git::https://github.com/hops-poc/paved-road.git//modules/service?ref=6e2d262627af5c9c9b8c04f4a70585afb213af84"
+  source    = "git::https://github.com/hops-poc/paved-road.git//modules/service?ref=3ca44f0a8d4e85a9fa58e2a4156412efa62408bb"
   env       = "prod"
   image_uri = var.image_uri
 }
