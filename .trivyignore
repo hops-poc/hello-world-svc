@@ -1,0 +1,11 @@
+# Documented CVE exceptions, not a way to route around the gate (DECISIONS.md
+# §4: blocking objective findings is only defensible when being wrong is
+# rare — an undocumented blanket ignore would be exactly the gaming that
+# section warns against). Each entry: unfixable upstream (Debian trixie has
+# no patched package yet — Trivy itself reports "affected"/"fix_deferred",
+# not "fixed") AND the affected package (perl-base) is never invoked by this
+# app — it's incidental Debian-slim base-image tooling, not a dependency of
+# a Bun HTTP server. Re-evaluate (remove the ignore) once Debian ships a fix.
+CVE-2026-13221
+CVE-2026-42496
+CVE-2026-8376
