@@ -14,10 +14,11 @@ permissions:
   actions: read        # id-token/actions:read is silently dropped (or, for
                          # actions:read, hard-rejected at parse time) without this
                          # — conftest-terraform needs it for actions/download-artifact.
+  pull-requests: write   # ReviewBot/Triage (agents.yml) comment on PRs
 
 jobs:
   gates:
-    uses: hops-poc/paved-road/.github/workflows/plan.yml@706a433f135b78999e4cee908d7c27ff93757d98
+    uses: hops-poc/paved-road/.github/workflows/plan.yml@fec8d003286c073e4276f3f9599e894add0041fb
     secrets: inherit
 
   # ReviewBot's checkpoint only — explains a gate failure, PR or push, and
@@ -30,9 +31,11 @@ jobs:
   agents-narrate:
     needs: gates
     if: always()
-    uses: hops-poc/paved-road/.github/workflows/agents.yml@706a433f135b78999e4cee908d7c27ff93757d98
+    uses: hops-poc/paved-road/.github/workflows/agents.yml@fec8d003286c073e4276f3f9599e894add0041fb
+    with:
+      gates_result: ${{ needs.gates.result }}
 
   deploy:
     needs: gates
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    uses: hops-poc/paved-road/.github/workflows/deploy.yml@706a433f135b78999e4cee908d7c27ff93757d98
+    uses: hops-poc/paved-road/.github/workflows/deploy.yml@fec8d003286c073e4276f3f9599e894add0041fb
