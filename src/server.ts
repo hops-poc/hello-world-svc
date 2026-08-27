@@ -20,3 +20,6 @@ export const server = Bun.serve({
 });
 
 console.log(`listening on :${server.port}`);
+
+// Deliberate type error — verifying structured Triage narration end-to-end, revert before merge.
+const _typecheckBreak: number = "oops";
