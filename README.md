@@ -26,3 +26,7 @@ bun run dev
 
 See `paved-road`'s `DECISIONS.md` and `AI-GOVERNANCE.md` for the why behind
 the gates once they land here.
+
+<!-- fork-isolation-scenario-11 test PR: verifies plan.yml's tofu-plan/conftest-terraform
+     jobs are skipped for a fork PR (head.repo.full_name != base repo). No merge intended;
+     PR closed after the Actions run is captured as evidence for DECISIONS.md scenario 11. -->
