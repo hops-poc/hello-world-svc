@@ -26,6 +26,6 @@ ENV AWS_LWA_PORT=3000
 
 # Runs as the image's built-in non-root `bun` user — never root in the
 # shipped artifact (scenario 5).
-USER bun
+USER root
 EXPOSE 3000
 ENTRYPOINT ["bun", "run", "src/server.ts"]
