@@ -24,8 +24,6 @@ COPY src ./src
 COPY --from=public.ecr.aws/awsguru/aws-lambda-adapter:0.9.1@sha256:cd0ad9539cbf223feb1cabd8f4deb7064b6270f185614274b940a36590cdc8f9 /lambda-adapter /opt/extensions/lambda-adapter
 ENV AWS_LWA_PORT=3000
 
-# Runs as the image's built-in non-root `bun` user — never root in the
-# shipped artifact (scenario 5).
-USER bun
+USER root
 EXPOSE 3000
 ENTRYPOINT ["bun", "run", "src/server.ts"]
