@@ -15,6 +15,11 @@ export const server = Bun.serve({
     "/api/hello": () =>
       Response.json({ message: "hello from hello-world-svc", ts: new Date().toISOString() }),
     "/api/healthz": () => new Response("ok"),
+    "/api/version": () =>
+      Response.json({
+        env: process.env.APP_ENV ?? "local",
+        build: process.env.APP_BUILD?.split(":").pop()?.slice(0, 12) ?? "dev",
+      }),
     "/*": index,
   },
 });
