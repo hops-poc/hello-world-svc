@@ -34,7 +34,7 @@ bun run dev
 | `src/server.ts` (API routes) | live, tested (`src/server.test.ts` covers `/api/hello`, `/api/healthz`) |
 | `src/app.tsx` (React SPA) | live, **not** exercised by any test — `bun run typecheck` is the only signal on it. Add a render test before treating "tests green" as covering the SPA half |
 | `.github/workflows/ci.yml` | live — calls `paved-road`'s reusable `plan.yml`/`agents.yml`/`deploy.yml` at a pinned SHA (three files, not one `service.yml` — see `paved-road/bootstrap/README.md` for the OIDC reason) |
-| `infra/dev/`, `infra/prod/` | live — thin callers of `paved-road/modules/service`, deployed via OIDC from `deploy.yml` |
+| `infra/main.tf`, `infra/config.yaml` | live — one stack for both environments, config-driven. `config.yaml` is the only file you edit; `main.tf` calls `paved-road/modules/service` via OIDC from `deploy.yml` |
 | `infracost-usage.yml` | live — read by the Infracost reporting gate. `resource_usage: {}` until there are real traffic assumptions |
 | `.claude/skills/{ship,watch}` | live — console DX (PRD §11): `ship` drives branch → gates → dev → human-approved prod, `watch` tails a run and surfaces ReviewBot/Triage narration |
 
