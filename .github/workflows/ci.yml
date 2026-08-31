@@ -18,7 +18,7 @@ permissions:
 
 jobs:
   gates:
-    uses: hops-poc/paved-road/.github/workflows/plan.yml@a2c8274e21ec095653d62ea5d3efdb493e703c2a
+    uses: hops-poc/paved-road/.github/workflows/plan.yml@7e1f581bd18834069ddc389c75a40c2bb4e762ef
     secrets: inherit
 
   # ReviewBot's checkpoint only — explains a gate failure, PR or push, and
@@ -31,7 +31,7 @@ jobs:
   agents-narrate:
     needs: gates
     if: always()
-    uses: hops-poc/paved-road/.github/workflows/agents.yml@a2c8274e21ec095653d62ea5d3efdb493e703c2a
+    uses: hops-poc/paved-road/.github/workflows/agents.yml@7e1f581bd18834069ddc389c75a40c2bb4e762ef
     with:
       gates_result: ${{ needs.gates.result }}
     secrets: inherit
@@ -39,4 +39,4 @@ jobs:
   deploy:
     needs: gates
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    uses: hops-poc/paved-road/.github/workflows/deploy.yml@a2c8274e21ec095653d62ea5d3efdb493e703c2a
+    uses: hops-poc/paved-road/.github/workflows/deploy.yml@7e1f581bd18834069ddc389c75a40c2bb4e762ef
