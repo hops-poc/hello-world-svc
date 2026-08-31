@@ -1,7 +1,7 @@
 # The only file you edit to change this service's infra. Read by infra/main.tf
 # via yamldecode — never hand-edit main.tf per environment.
 service: hello-world-svc
-module_ref: 076cb759f73b6a1ee88cce2173bc8f50cef6ea46 # paved-road commit SHA; bump via PR to upgrade
+module_ref: 7e1f581bd18834069ddc389c75a40c2bb4e762ef # paved-road commit SHA; bump via PR to upgrade
 
 # Applied to every environment unless overridden below.
 defaults:
