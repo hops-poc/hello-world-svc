@@ -1,4 +1,22 @@
 # Usage assumptions for cost estimation (PRD §9.8) — wired to the Infracost
-# CI step in session 3. Placeholder until real traffic assumptions exist.
+# CI step in session 3. Very-low-traffic placeholder (a demo project, not a
+# production service) — bump these when real traffic exists.
 version: 0.1
-resource_usage: {}
+resource_usage:
+  module.service.aws_lambda_function.this:
+    monthly_requests: 1000
+    request_duration_ms: 200
+  module.service.aws_dynamodb_table.this:
+    monthly_write_request_units: 500
+    monthly_read_request_units: 1000
+    storage_gb: 1
+  module.service.aws_cloudfront_distribution.this[0]:
+    monthly_data_transfer_to_internet_gb:
+      us: 1
+    monthly_http_requests:
+      us: 500
+    monthly_https_requests:
+      us: 500
+  module.service.aws_cloudwatch_log_group.lambda:
+    storage_gb: 1
+    monthly_data_ingested_gb: 1
