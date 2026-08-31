@@ -29,6 +29,8 @@ provider "aws" {
   skip_credentials_validation = true
   skip_requesting_account_id  = true
 
+  # Satisfies Infracost Cloud's FinOps tagging policy (Service + Environment
+  # on every taggable resource) without per-resource tags in modules/service.
   default_tags {
     tags = {
       Service     = local.cfg.service
